@@ -1,10 +1,12 @@
 ﻿namespace Notification.Core.Containers.Contracts;
 
-public interface INotificationContainer
+public interface INotificationContainer<T> where T : BaseNotification
 {
-    void Add(string message);
+    void Add(T message);
 
-    IList<BaseNotification> GetAll();
+    IEnumerable<T> GetAll();
 
+    IEnumerable<T> ReadAll();
+    
     void Clear();
 }

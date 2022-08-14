@@ -2,8 +2,17 @@
 
 namespace Notification.Core.Models;
 
-public class BaseNotification
+public abstract class BaseNotification
 {
+    public BaseNotification(string title, string message, NotificationType type)
+    {
+        Title = title;
+        Message = message;
+        Type = type;
+    }
+
+    public string? Title { get; set; }
+    
     public string? Message { get; set;}
 
     public string? AlertBackgroundColor { get; set;}
