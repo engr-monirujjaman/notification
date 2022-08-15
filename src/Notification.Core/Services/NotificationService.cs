@@ -13,16 +13,16 @@ public class NotificationService : INotificationService
         _notificationContainer = notificationContainer;
     }
 
-    public void Information(string message) =>
-        _notificationContainer.Add(new NotificationEntity(message, NotificationType.Info));
+    public void Information(string message, string? title = null) =>
+        _notificationContainer.Add(new NotificationEntity(title??"Information!" , message, NotificationType.Info));
 
-    public void Success(string message) =>
-        _notificationContainer.Add(new NotificationEntity(message, NotificationType.Success));
+    public void Success(string message, string? title = null) =>
+        _notificationContainer.Add(new NotificationEntity(title??"Success!", message, NotificationType.Success));
     
-    public void Warning(string message) =>
-        _notificationContainer.Add(new NotificationEntity(message, NotificationType.Warning));
+    public void Warning(string message, string? title = null) =>
+        _notificationContainer.Add(new NotificationEntity(title??"Warning!", message, NotificationType.Warning));
 
-    public void Error(string message) =>
-        _notificationContainer.Add(new NotificationEntity(message, NotificationType.Error));
+    public void Error(string message, string? title = null) =>
+        _notificationContainer.Add(new NotificationEntity(title??"Error!", message, NotificationType.Error));
 
 }

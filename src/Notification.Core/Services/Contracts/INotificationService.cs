@@ -2,11 +2,11 @@
 
 public interface INotificationService
 {
-    void Information(string message);
+    void Information(string message, string? title = null);
 
-    void Success(string message);
+    void Success(string message, string? title = null);
     
-    void Warning(string message);
+    void Warning(string message, string? title = null);
     
-    void Error(string message);
+    void Error(string message, string? title = null);
 }
