@@ -8,9 +8,9 @@ public class NotificationService : INotificationService
 {
     private readonly INotificationContainer<NotificationEntity> _notificationContainer;
 
-    public NotificationService(INotificationContainer<NotificationEntity> notificationContainer)
+    public NotificationService(INotificationMessageContainerFactory messageContainerFactory)
     {
-        _notificationContainer = notificationContainer;
+        _notificationContainer = messageContainerFactory.Create<NotificationEntity>();
     }
 
     public void Information(string message, string? title = null) =>

@@ -11,29 +11,54 @@
 </head>
 <body>
     <button>Show Alert</button>
-    <div class="mm-notification-alert hide">
+    <div id="notification-id"></div>
+    <!-- <div class="mm-notification-alert hide">
        <span class="fas fa-exclamation-circle"></span>
        <div class="msg"><strong>Warning!</strong> 
         <br/>
-        <span class="msg-desc">This is a warning alert! jkdjfds kjdfds fkjdsf fkdjf dfjd fgfg dfdfjf dsfjdksf fldjsfds fdfjdsf dsfljdsfds fljfsdf </span></div>
+        <span class="msg-desc">This is a warning alert!</span></div>
        <div class="close-btn">
           <span class="fas fa-times"></span>
        </div>
-    </div>
+    </div> -->
     <script>
+
+       let data = `<div class="mm-notification-alert show showAlert">
+       <span class="fas fa-exclamation-circle"></span>
+       <div class="msg"><strong>Warning! kjd fdasfkd sfdskjfds fsdkfjds fsdfjds jfdfh dfhsdf fsdfk fggk fdkg gkfg gfdksgh ghfd gskdg fdgfd gfdhg kjdfj kgjf fkgjg kgjfjfg kfjj kfjg fjdskf fdsfj dfjk
+          dfkjd dafdskf fjsdfksd fdkjf fsgjfg fgkjfsdg fsgkjfg fsdgkjfds gfdlkgjfd gdflkjg gfdjgs gsfdjg glfsdjg monir</strong> 
+        <br/>
+        <span class="msg-desc">This is a warning alert! jfdfh dfhsdf fsdfk fggk fdkg gkfg gfdksgh ghfd gskdg fdgfd gfdhg kjdfj kgjf fkgjg kgjfjfg kfjj kfjg fjdskf fdsfj dfjk
+          dfkjd dafdskf fjsdfksd fdkjf fsgjfg fgkjfsdg fsgkjfg fsdgkjfds gfdlkgjfd gdflkjg gfdjgs gsfdjg glfsdjg monir</span></div>
+       <div class="close-btn">
+          <span class="fas fa-times"></span>
+       </div>
+    </div>`;
+
+
+
        $('button').click(function(){
-         $('.mm-notification-alert').addClass("show");
-         $('.mm-notification-alert').removeClass("hide");
-         $('.mm-notification-alert').addClass("showAlert");
+
+        //  $('.mm-notification-alert').addClass("show");
+        //  $('.mm-notification-alert').removeClass("hide");
+        //  $('.mm-notification-alert').addClass("showAlert");
+
+        $('#notification-id').append(data);
+
          setTimeout(function(){
            $('.mm-notification-alert').removeClass("show");
            $('.mm-notification-alert').addClass("hide");
          },5000);
+
        });
+
        $('.close-btn').click(function(){
          $('.mm-notification-alert').removeClass("show");
          $('.mm-notification-alert').addClass("hide");
        });
+
+
+
     </script>
 </body>
 </html>

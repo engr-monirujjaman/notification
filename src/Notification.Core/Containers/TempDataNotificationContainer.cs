@@ -3,7 +3,7 @@ using Notification.Core.Services.Contracts;
 
 namespace Notification.Core.Containers;
 
-public class TempDataNotificationContainer : INotificationContainer<NotificationEntity>
+public class TempDataNotificationContainer<T> : INotificationContainer<T> where T : BaseNotification
 {
     private readonly ITempDataService _tempDataService;
     private const string Key = "5D525C27275A4C9DBEC923995EED8B24NOTIFICATIONKEY";
@@ -13,21 +13,21 @@ public class TempDataNotificationContainer : INotificationContainer<Notification
         _tempDataService = tempDataService;
     }
 
-    public void Add(NotificationEntity notification)
+    public void Add(T notification)
     {
-        var notifications = _tempDataService.Get<List<NotificationEntity>>(Key) ??
-                            Enumerable.Empty<NotificationEntity>();
+        var notifications = _tempDataService.Get<List<T>>(Key) ??
+                            Enumerable.Empty<T>();
 
         _tempDataService.Add(Key, notifications.Append(notification));
     }
 
-    public IEnumerable<NotificationEntity> GetAll() => _tempDataService.Peek<List<NotificationEntity>>(Key) ??
-                                                 Enumerable.Empty<NotificationEntity>();
+    public IEnumerable<T> GetAll() => _tempDataService.Peek<List<T>>(Key) ??
+                                                 Enumerable.Empty<T>();
 
-    public IEnumerable<NotificationEntity> ReadAll()
+    public IEnumerable<T> ReadAll()
     {
-        var notifications = _tempDataService.Get<List<NotificationEntity>>(Key) ??
-                            Enumerable.Empty<NotificationEntity>();
+        var notifications = _tempDataService.Get<List<T>>(Key) ??
+                            Enumerable.Empty<T>();
         Clear();
         return notifications;
     }

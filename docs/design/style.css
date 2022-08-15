@@ -38,11 +38,13 @@ button{
   color: white;
   letter-spacing: 1px;
   cursor: pointer;
+  display: block;
 }
 .mm-notification-alert{
   background: var(--mm-notification-alert-background-color);
   padding: 20px 40px;
   min-width: 420px;
+  max-width: 50%;
   position: absolute;
   right: 0;
   top: 10px;
@@ -105,11 +107,11 @@ button{
 }
 .mm-notification-alert .msg span{
   font-size: 16px;
-  max-width: 300px;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
-
+  -webkit-line-clamp: 3; /* number of lines to show */
+  line-clamp: 3; 
   -webkit-box-orient: vertical;
 }
 .mm-notification-alert .close-btn{
