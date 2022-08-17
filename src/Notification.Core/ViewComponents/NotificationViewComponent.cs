@@ -1,20 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Notification.Core.Enums;
+using Notification.Core.Services.Contracts;
 
 namespace Notification.Core.ViewComponents;
 
 [ViewComponent(Name = "Notification")]
 public class NotificationViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke()
+    private readonly INotificationService _notificationService;
+    private readonly NotificationConfiguration _configuration;
+
+    public NotificationViewComponent(INotificationService notificationService, NotificationConfiguration configuration)
+    {
+        _notificationService = notificationService;
+        _configuration = configuration;
+        _configuration.DurationInSeconds *= 1000;
+    }
+    
+    public IViewComponentResult Invoke(Action<NotificationConfiguration>? configuration)
     {
         return View("Default", new NotificationViewModel
         {
-            Configuration = "Test Notification Configurations",
-            Notifications = new List<BaseNotification>
-            {
-                new NotificationEntity("Warning!", "Test Warning Message", NotificationType.Warning)
-            }
+            Configuration = _configuration,
+                Notifications = _notificationService.ReadAllNotifications()
         });
     }
     

@@ -1,7 +1,15 @@
+using Notification.Core.Enums;
+using Notification.Core.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddNotification(config =>
+{
+    config.DurationInSeconds = 4;
+    config.Position = NotificationPosition.TopRight;
+});
 
 var app = builder.Build();
 

@@ -9,4 +9,10 @@ public interface INotificationService
     void Warning(string message, string? title = null);
     
     void Error(string message, string? title = null);
+    
+    IEnumerable<NotificationEntity> GetNotifications();
+
+    IEnumerable<NotificationEntity> ReadAllNotifications();
+
+    void RemoveAll();
 }

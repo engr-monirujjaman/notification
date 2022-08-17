@@ -12,13 +12,15 @@
 <body>
     <button>Show Alert</button>
     <div class="notification" id="notification-id"></div>
-    <!-- <div class="mm-notification-alert hide">
+
+
+    <!-- <div class="mm-notification-alert hide" style="border-left: 10px solid #ffa502; background: #ffdb9b;">
        <span class="fas fa-exclamation-circle"></span>
-       <div class="msg"><strong>Warning!</strong> 
+       <div class="msg" style="color: #ce8500;"><strong>Warning!</strong> 
         <br/>
         <span class="msg-desc">This is a warning alert!</span></div>
-       <div class="close-btn">
-          <span class="fas fa-times"></span>
+       <div class="close-btn" style="background: #ffd080;" onmouseover="this.style.color='#ffc766'" onmouseout="this.style.color='#ce8500'">
+          <span class="fas fa-times" style="color: #ce8500;"></span>
        </div>
     </div> -->
     <script>
@@ -41,66 +43,77 @@
 
         const notificationConfig = {
          info:{
-               notificationAlertBackgroundColor: '#ffdb9b',
-               notificationAlertMessageColor: "#ce8500",
-		         notificationAlertIconColor: "#ce8500",
-		         notificationAlertLeftBorderColor: "#ffa502",
-               notificationCloseBackgroundColor: "#ffd080",
-               notificationCloseButtonIconColor: "#ce8500",
-               notificationCloseButtonHoverColor: "#ffc766"
+               icon: 'fas fa-info-circle',
+               alertBackgroundColor: '#ffdb9b',
+               alertMessageColor: "#ce8500",
+		         alertIconColor: "#ce8500",
+		         alertLeftBorderColor: "#ffa502",
+               closeBackgroundColor: "#ffd080",
+               closeButtonIconColor: "#ce8500",
+               closeButtonHoverColor: "#ffc766"
             },
             warning:{
-               notificationAlertBackgroundColor: '#ffdb9b',
-               notificationAlertMessageColor: "#ce8500",
-		         notificationAlertIconColor: "#ce8500",
-		         notificationAlertLeftBorderColor: "#ffa502",
-               notificationCloseBackgroundColor: "#ffd080",
-               notificationCloseButtonIconColor: "#ce8500",
-               notificationCloseButtonHoverColor: "#ffc766"
+               icon: 'fas fa-exclamation-circle',
+               alertBackgroundColor: '#ffdb9b',
+               alertMessageColor: "#ce8500",
+		         alertIconColor: "#ce8500",
+		         alertLeftBorderColor: "#ffa502",
+               closeBackgroundColor: "#ffd080",
+               closeButtonIconColor: "#ce8500",
+               closeButtonHoverColor: "#ffc766"
             },
             success:{
-               notificationAlertBackgroundColor: '#ffdb9b',
-               notificationAlertMessageColor: "#ce8500",
-		         notificationAlertIconColor: "#ce8500",
-		         notificationAlertLeftBorderColor: "#ffa502",
-               notificationCloseBackgroundColor: "#ffd080",
-               notificationCloseButtonIconColor: "#ce8500",
-               notificationCloseButtonHoverColor: "#ffc766"
+               icon: 'fas fa-check-circle',
+               alertBackgroundColor: '#ffdb9b',
+               alertMessageColor: "#ce8500",
+		         alertIconColor: "#ce8500",
+		         alertLeftBorderColor: "#ffa502",
+               closeBackgroundColor: "#ffd080",
+               closeButtonIconColor: "#ce8500",
+               closeButtonHoverColor: "#ffc766"
             },
             error:{
-               notificationAlertBackgroundColor: '#ffdb9b',
-               notificationAlertMessageColor: "#ce8500",
-		         notificationAlertIconColor: "#ce8500",
-		         notificationAlertLeftBorderColor: "#ffa502",
-               notificationCloseBackgroundColor: "#ffd080",
-               notificationCloseButtonIconColor: "#ce8500",
-               notificationCloseButtonHoverColor: "#ffc766"
+               icon: 'fas fa-exclamation',
+               alertBackgroundColor: '#ffdb9b',
+               alertMessageColor: "#ce8500",
+		         alertIconColor: "#ce8500",
+		         alertLeftBorderColor: "#ffa502",
+               closeBackgroundColor: "#ffd080",
+               closeButtonIconColor: "#ce8500",
+               closeButtonHoverColor: "#ffc766"
             },
             delayTime: 5000
         }
 
+
         class Notification {
-            information = (message, title = 'Information!') => prepare(notificationConfig.warning, message, title);
+
+            information(message, title = 'Information!') { return this.prepare(notificationConfig.warning, message, title);}
       
-            warning = (message, title = 'Warning!') => prepare(notificationConfig.warning, message, title);
+            warning(message, title = 'Warning!') {return this.prepare(notificationConfig.warning, message, title);}
 
-            success = (message, title = 'Success!') => prepare(notificationConfig.success, message, title);
+            success(message, title = 'Success!') {return this.prepare(notificationConfig.success, message, title);}
 
-            error = (message, title = 'Error!') => prepare(notificationConfig.error, message, title);
+          error(message, title = 'Error!') {return this.prepare(notificationConfig.error, message, title);} 
 
-            prepare = (config, message, title) =>`<div class="mm-notification-alert show showAlert">
-                                                      <span class="fas fa-exclamation-circle"></span>
-                                                      <div class="msg"><strong>${title}</strong><br/><span class="msg-desc">${message}</span></div>
-                                                      <div class="close-btn">
-                                                            <span class="fas fa-times" style="color: ${config.notificationCloseButtonIconColor}"></span>
+          prepare(config, message, title) { return `<div class="mm-notification-alert show showAlert" style="border-left: 10px solid ${config.alertLeftBorderColor}; background: ${config.alertBackgroundColor};">
+                                                      <span class="${config.icon}"></span>
+                                                      <div class="msg" style="color: ${config.alertMessageColor};"><strong>${title}</strong><br/><span class="msg-desc">${message}</span></div>
+                                                      <div class="close-btn" style="background: ${config.closeBackgroundColor};" onmouseover="this.style.color='${config.closeButtonHoverColor}; !important'" onmouseout="this.style.color='${config.closeBackgroundColor}'">
+                                                            <span class="fas fa-times" style="color: ${config.closeButtonIconColor}"></span>
                                                       </div>
-                                                   </div>`;
+                                                   </div>`;}
         }
-
 
         $('button').click(function(){
 
-         $('#notification-id').append(data);
+         let d = new Notification();
+
+
+         console.log(d.warning('This is warning message!'));
+
+
+         $('#notification-id').append(d.warning('This is warning message kfjdkfjd dfkjsdkf flkjsdaf dflkjdasf dslfkj!'));
 
          const timer = setTimeout(function(){
            $('.mm-notification-alert').removeClass("show");
@@ -114,12 +127,6 @@
          // $('#notification-id').prepend(data).children(':first').delay(10000).removeClass('show').addClass('hide');
 
         });
-
-
-         // setTimeout(function(){
-         //   $('.mm-notification-alert').removeClass("show");
-         //   $('.mm-notification-alert').addClass("hide");
-         // },5000);
 
        $('.close-btn').click(function(){
          $('.mm-notification-alert').removeClass("show");

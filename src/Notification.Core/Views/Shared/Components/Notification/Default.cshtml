@@ -1,126 +1,172 @@
-﻿@model NotificationViewModel
+﻿@using System.Text.Json
+@model NotificationViewModel
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 <style>
+    *{
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    html,body{
+      height: 100%;
+    }
+    body{
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    button{
+      padding: 8px 16px;
+      font-size: 25px;
+      font-weight: 500;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+      background: #e69100;
+      color: white;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: block;
+    }
     
-.notification{
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  color: #fff;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-end;
-  justify-content: flex-end;
-  pointer-events: none;
-  box-sizing: border-box;
-  border: 2px solid red;
-}
-
-.mm-notification-alert{
-  background: var(--mm-notification-alert-background-color);
-  padding: 20px 40px;
-  min-width: 420px;
-  max-width: 50%;
-  min-height: 180px;
-  position: relative;
-  display: block;
-  border-radius: 4px;
-  border-left: 10px solid var(--mm-notification-alert-left-border-color);
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-.mm-notification-alert.showAlert{
-  opacity: 1;
-  pointer-events: auto;
-}
-.mm-notification-alert.show{
-  animation: mm_notification_show_slide 1s ease forwards;
-}
-
-@@keyframes mm_notification_show_slide {
-  0%{
-    transform: translateX(100%);
-  }
-  40%{
-    transform: translateX(-10%);
-  }
-  80%{
-    transform: translateX(0%);
-  }
-  100%{
-    transform: translateX(-20px);
-  }
-}
-.mm-notification-alert.hide{
-  animation: mm_notification_hide_slide 1s ease forwards;
-}
-@@keyframes mm_notification_hide_slide {
-  0%{
-    transform: translateX(-10px);
-  }
-  40%{
-    transform: translateX(0%);
-  }
-  80%{
-    transform: translateX(-10%);
-  }
-  100%{
-    transform: translateX(100%);
-  }
-}
-.mm-notification-alert .fa-exclamation-circle{
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--mm-notification-alert-icon-color);
-  font-size: 30px;
-}
-.mm-notification-alert .msg{
-  padding: 0 20px;
-  font-size: 18px;
-  color: var(--mm-notification-alert-message-color);
-}
-.mm-notification-alert .msg span{
-  font-size: 16px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* number of lines to show */
-  line-clamp: 3; 
-  -webkit-box-orient: vertical;
-}
-.mm-notification-alert .close-btn{
-  position: absolute;
-  right: 0px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--mm-notification-close-background-color);
-  padding: 100% 18px;
-  cursor: pointer;
-}
-.mm-notification-alert .close-btn:hover{
-  background: var(--mm-notification-close-button-hover-color);
-}
-.mm-notification-alert .close-btn .fas{
-  color: var(--mm-notification-close-button-icon-color);
-  font-size: 22px;
-  line-height: 40px;
-}
+    .notification{
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      color: #fff;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      justify-content: flex-end;
+      pointer-events: none;
+      box-sizing: border-box;
+      border: 2px solid red;
+    }
+    
+    .mm-notification-alert{
+      padding: 20px 40px;
+      min-width: 420px;
+      max-width: 50%;
+      min-height: 90px;
+      position: relative;
+      display: block;
+      border-radius: 4px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+    .mm-notification-alert.showAlert{
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .mm-notification-alert.show{
+      animation: mm_notification_show_slide 1s ease forwards;
+    }
+    @@keyframes mm_notification_show_slide {
+      0%{
+        transform: translateX(100%);
+      }
+      40%{
+        transform: translateX(-10%);
+      }
+      80%{
+        transform: translateX(0%);
+      }
+      100%{
+        transform: translateX(-20px);
+      }
+    }
+    .mm-notification-alert.hide{
+      animation: mm_notification_hide_slide 1s ease forwards;
+    }
+    @@keyframes mm_notification_hide_slide {
+      0%{
+        transform: translateX(-10px);
+      }
+      40%{
+        transform: translateX(0%);
+      }
+      80%{
+        transform: translateX(-10%);
+      }
+      100%{
+        transform: translateX(100%);
+      }
+    }
+    .mm-notification-alert .fa-exclamation-circle{
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--mm-notification-alert-icon-color);
+      font-size: 30px;
+    }
+    .mm-notification-alert .msg{
+      padding: 0 20px;
+      font-size: 18px;
+    }
+    .mm-notification-alert .msg span{
+      font-size: 16px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* number of lines to show */
+      line-clamp: 3; 
+      -webkit-box-orient: vertical;
+    }
+    .mm-notification-alert .close-btn{
+      position: absolute;
+      right: 0px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 100% 18px;
+      cursor: pointer;
+      background: #ffd080;
+    }
+    .mm-notification-alert .close-btn:hover{
+      background: #ffc766;
+    }
+    .mm-notification-alert .close-btn .fas{
+      font-size: 22px;
+      line-height: 40px;
+    }
 </style>
 
 <script>
     
-    const notificationConfig = {}
+    const notificationConfig = @JsonSerializer.Serialize(Model.Configuration, new JsonSerializerOptions
+                               {
+                                 WriteIndented = true
+                               })
+                               
+    class Notification {
+         
+       information(message, title = 'Information!') { return this.prepare(notificationConfig.warning, message, title);}
+                
+       warning(message, title = 'Warning!') {return this.prepare(notificationConfig.warning, message, title);}
+          
+       success(message, title = 'Success!') {return this.prepare(notificationConfig.success, message, title);}
+          
+       error(message, title = 'Error!') {return this.prepare(notificationConfig.error, message, title);} 
+          
+       prepare(config, message, title) { return `<div class="mm-notification-alert show showAlert" style="border-left: 10px solid ${config.alertLeftBorderColor}; background: ${config.alertBackgroundColor};">
+                                                      <span class="${config.icon}"></span>
+                                                      <div class="msg" style="color: ${config.alertMessageColor};"><strong>${title}</strong><br/><span class="msg-desc">${message}</span></div>
+                                                      <div class="close-btn" style="background: ${config.closeBackgroundColor};">
+                                                          <span class="fas fa-times" style="color: ${config.closeButtonIconColor}"></span>
+                                                      </div>
+                                                  </div>`;}
+    }
 
 </script>
 

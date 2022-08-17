@@ -25,4 +25,9 @@ public class NotificationService : INotificationService
     public void Error(string message, string? title = null) =>
         _notificationContainer.Add(new NotificationEntity(title??"Error!", message, NotificationType.Error));
 
+    public IEnumerable<NotificationEntity> GetNotifications() => _notificationContainer.GetAll();
+
+    public IEnumerable<NotificationEntity> ReadAllNotifications() => _notificationContainer.ReadAll();
+
+    public void RemoveAll() => _notificationContainer.Clear();
 }

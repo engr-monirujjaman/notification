@@ -2,7 +2,7 @@
 
 public class NotificationViewModel
 {
-    public string? Configuration { get; set; }
+    public NotificationConfiguration? Configuration { get; set; } = new();
 
-    public IEnumerable<BaseNotification>? Notifications { get; set; }
+    public IEnumerable<NotificationEntity>? Notifications { get; set; } = new List<NotificationEntity>();
 }
