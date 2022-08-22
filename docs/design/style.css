@@ -148,3 +148,20 @@ button{
   font-size: 22px;
   line-height: 40px;
 }
+
+.mm-notification-info-alert{
+  border-left: 10px solid var(--mm-notification-alert-left-border-color);
+  background: var(--mm-notification-alert-background-color);
+}
+
+.mm-notification-info-alert .msg{
+  color: var(--mm-notification-alert-message-color);
+}
+
+.mm-notification-info-alert .close-btn:hover{
+  background: var(--mm-notification-close-button-hover-color);
+}
+
+.mm-notification-info-alert .close-btn .close-icon{
+  color: var(--mm-notification-close-button-icon-color);
+}
