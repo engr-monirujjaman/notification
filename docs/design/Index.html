@@ -32,7 +32,7 @@
       let data = `<div class="mm-notification-alert show showAlert mm-notification-info-alert">
       <span class="fas fa-exclamation-circle"></span>
       <div class="msg">
-        <strong>Warning!</strong>
+        <strong class="msg-title">Warning!</strong>
         <br />
         <span class="msg-desc">This is a warning alert!</span>
       </div>
@@ -66,7 +66,7 @@
         prepare(message, title, unitqueId) {
           return `<div class="mm-notification-alert show showAlert mm-notification-info-alert" id="${unitqueId}">
                         <span class="fas fa-exclamation-circle"></span>
-                        <div class="msg"><strong>${title}</strong><br/><span class="msg-desc">${message}</span></div>
+                        <div class="msg"><strong class="msg-title">${title}</strong><br/><span class="msg-desc">${message}</span></div>
                         <div class="close-btn"><span class="fas fa-times close-icon"></span></div>
                   </div>`;
         }

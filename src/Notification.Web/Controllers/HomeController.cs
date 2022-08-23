@@ -18,15 +18,16 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        _notificationService.Success("Success message from index page!");
+        _notificationService.Warning("Success message from index page!");
         return View();
     }
 
     public IActionResult Privacy()
     {
-        _notificationService.Success("Success message - 1 from privacy page!");
-        _notificationService.Success("Success message - 2 from privacy page!");
+        _notificationService.Information("Success message - 1 from privacy page!");
+        _notificationService.Warning("Success message - 2 from privacy page!");
         _notificationService.Success("Success message - 3 from privacy page!");
+        _notificationService.Error("Success message - 3 from privacy page!");
         return View();
     }
 

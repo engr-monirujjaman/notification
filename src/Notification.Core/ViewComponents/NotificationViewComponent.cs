@@ -15,7 +15,6 @@ public class NotificationViewComponent : ViewComponent
     {
         _notificationService = notificationService;
         _configuration = configuration;
-        _configuration.DurationInSeconds *= 1000;
     }
     
     public IViewComponentResult Invoke()

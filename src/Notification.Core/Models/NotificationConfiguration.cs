@@ -19,14 +19,15 @@ public class NotificationConfiguration
     public NotificationConfiguration AddInformation(NotificationSetting setting)
     {
         InfoSetting = setting;
-        InfoSetting.AlertBackgroundColor ??= "#ffdb9b";
-        InfoSetting.AlertMessageColor ??= "#ce8500";
-        InfoSetting.AlertIconColor ??= "#ce8500";
-        InfoSetting.AlertLeftBorderColor ??= "#ffa502";
-        InfoSetting.CloseButtonBackgroundColor ??= "#ffd080";
-        InfoSetting.CloseButtonIconColor ??= "#ce8500";
-        InfoSetting.CloseButtonHoverColor ??= "#ffc766";
-        InfoSetting.Icon ??= "fas fa-info-circle";
+        InfoSetting.AlertBackgroundColor ??= "#CDE2FF";
+        InfoSetting.AlertMessageTitleColor ??= "#3d75e5";
+        InfoSetting.AlertMessageColor ??= "#3d75e5";
+        InfoSetting.AlertIconColor ??= "#3d75e5";
+        InfoSetting.AlertLeftBorderColor ??= "#3D84E5";
+        InfoSetting.CloseButtonBackgroundColor ??= "#83a4f2";
+        InfoSetting.CloseButtonIconColor ??= "#3d75e5";
+        InfoSetting.CloseButtonHoverColor ??= "#83B2F2";
+        InfoSetting.Icon ??= "fa-solid fa-circle-info";
         return this;
     }
     
@@ -34,27 +35,29 @@ public class NotificationConfiguration
     {
         WarningSetting = setting;
         WarningSetting.AlertBackgroundColor ??= "#ffdb9b";
+        WarningSetting.AlertMessageTitleColor ??= "#ce8500";
         WarningSetting.AlertMessageColor ??= "#ce8500";
         WarningSetting.AlertIconColor ??= "#ce8500";
         WarningSetting.AlertLeftBorderColor ??= "#ffa502";
         WarningSetting.CloseButtonBackgroundColor ??= "#ffd080";
         WarningSetting.CloseButtonIconColor ??= "#ce8500";
         WarningSetting.CloseButtonHoverColor ??= "#ffc766";
-        WarningSetting.Icon ??= "fas fa-exclamation-circle";
+        WarningSetting.Icon ??= "fa-solid fa-triangle-exclamation";
         return this;
     }
     
     public NotificationConfiguration AddSuccess(NotificationSetting setting)
     {
         SuccessSetting = setting;
-        SuccessSetting.AlertBackgroundColor ??= "#ffdb9b";
-        SuccessSetting.AlertMessageColor ??= "#ce8500";
-        SuccessSetting.AlertIconColor ??= "#ce8500";
-        SuccessSetting.AlertLeftBorderColor ??= "#ffa502";
-        SuccessSetting.CloseButtonBackgroundColor ??= "#ffd080";
-        SuccessSetting.CloseButtonIconColor ??= "#ce8500";
-        SuccessSetting.CloseButtonHoverColor ??= "#ffc766";
-        SuccessSetting.Icon ??= "fas fa-check-circle";
+        SuccessSetting.AlertBackgroundColor ??= "#C5F7DC";
+        SuccessSetting.AlertMessageTitleColor ??= "#3ac273";
+        SuccessSetting.AlertMessageColor ??= "#3ac273";
+        SuccessSetting.AlertIconColor ??= "#3ac273";
+        SuccessSetting.AlertLeftBorderColor ??= "#3ac248";
+        SuccessSetting.CloseButtonBackgroundColor ??= "#84d197";
+        SuccessSetting.CloseButtonIconColor ??= "#3ac273";
+        SuccessSetting.CloseButtonHoverColor ??= "#a4dbb2";
+        SuccessSetting.Icon ??= "fa-solid fa-circle-check";
         return this;
     }
     
@@ -62,14 +65,15 @@ public class NotificationConfiguration
     public NotificationConfiguration AddError(NotificationSetting setting)
     {
         ErrorSetting = ErrorSetting;
-        ErrorSetting.AlertBackgroundColor ??= "#ffdb9b";
-        ErrorSetting.AlertMessageColor ??= "#ce8500";
-        ErrorSetting.AlertIconColor ??= "#ce8500";
-        ErrorSetting.AlertLeftBorderColor ??= "#ffa502";
-        ErrorSetting.CloseButtonBackgroundColor ??= "#ffd080";
-        ErrorSetting.CloseButtonIconColor ??= "#ce8500";
-        WarningSetting.CloseButtonHoverColor ??= "#ffc766";
-        ErrorSetting.Icon ??= "fas fa-exclamation";
+        ErrorSetting.AlertBackgroundColor ??= "#FFCFCB";
+        ErrorSetting.AlertMessageTitleColor ??= "#a3180b";
+        ErrorSetting.AlertMessageColor ??= "#a3180b";
+        ErrorSetting.AlertIconColor ??= "#a3180b";
+        ErrorSetting.AlertLeftBorderColor ??= "#E9594C";
+        ErrorSetting.CloseButtonBackgroundColor ??= "#ed817e";//
+        ErrorSetting.CloseButtonIconColor ??= "#a3180b";
+        ErrorSetting.CloseButtonHoverColor ??= "#e66763";
+        ErrorSetting.Icon ??= "fa-solid fa-circle-exclamation";
         return this;
     }
 
@@ -82,7 +86,7 @@ public class NotificationConfiguration
         
         return new NotificationConfig
         {
-            DurationInSeconds = DurationInSeconds,
+            DurationInSeconds = DurationInSeconds > 0 ? DurationInSeconds * 1000 : 5000,
             Position = Position,
             WarningSetting = WarningSetting,
             InfoSetting = InfoSetting,

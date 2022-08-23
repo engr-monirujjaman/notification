@@ -4,6 +4,8 @@ public class NotificationSetting
 {
     public string? AlertBackgroundColor { get; set;}
 
+    public string? AlertMessageTitleColor { get; set; }
+    
     public string? AlertMessageColor { get; set; }
 
     public string? AlertIconColor { get; set;}

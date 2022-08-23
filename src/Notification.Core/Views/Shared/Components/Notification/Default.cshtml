@@ -1,11 +1,10 @@
-﻿@using System.Text.Json
-@using Notification.Core.Extensions
+﻿@using Notification.Core.Extensions
 @model NotificationViewModel
 
 <div class="notification" id="mm-notification"></div>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <style>
     .notification{
@@ -22,7 +21,6 @@
       justify-content: flex-end;
       pointer-events: none;
       box-sizing: border-box;
-      border: 5px solid red;
     }
     
     .mm-notification-alert{
@@ -88,7 +86,7 @@
       font-size: 18px;
     }
     
-    .mm-notification-alert .msg span{
+    .mm-notification-alert .msg .msg-desc{
       font-size: 16px;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -151,7 +149,11 @@
        background: @Model.Configuration.InfoSetting.AlertBackgroundColor;
      }
      
-     .mm-notification-info-alert .msg{
+     .mm-notification-info-alert .msg-title{
+       color: @Model.Configuration.InfoSetting.AlertMessageTitleColor;
+     }
+     
+     .mm-notification-info-alert .msg-desc{
        color: @Model.Configuration.InfoSetting.AlertMessageColor;
      }
      
@@ -172,8 +174,12 @@
        background: @Model.Configuration.WarningSetting.AlertBackgroundColor;
      }
      
-     .mm-notification-warning-alert .msg{
-       color: @Model.Configuration.WarningSetting.AlertMessageColor;
+     .mm-notification-warning-alert .msg-title{
+       color: @Model.Configuration.WarningSetting.AlertMessageTitleColor;
+     }
+     
+     .mm-notification-warning-alert .msg-desc{
+        color: @Model.Configuration.WarningSetting.AlertMessageColor;
      }
      
      .mm-notification-warning-alert .close-btn{
@@ -190,11 +196,15 @@
      
      .mm-notification-success-alert{
        border-left: 10px solid @Model.Configuration.SuccessSetting.AlertLeftBorderColor;
-       background: @Model.Configuration.WarningSetting.AlertBackgroundColor;
+       background: @Model.Configuration.SuccessSetting.AlertBackgroundColor;
      }
      
-     .mm-notification-success-alert .msg{
-       color: @Model.Configuration.SuccessSetting.AlertMessageColor;
+     .mm-notification-success-alert .msg-title{
+       color: @Model.Configuration.SuccessSetting.AlertMessageTitleColor;
+     }
+     
+     .mm-notification-success-alert .msg-desc{
+        color: @Model.Configuration.SuccessSetting.AlertMessageColor;
      }
      
      .mm-notification-success-alert .close-btn{
@@ -214,8 +224,12 @@
        background: @Model.Configuration.ErrorSetting.AlertBackgroundColor;
      }
      
-     .mm-notification-error-alert .msg{
-       color: @Model.Configuration.ErrorSetting.AlertMessageColor;
+     .mm-notification-error-alert .msg-title{
+       color: @Model.Configuration.ErrorSetting.AlertMessageTitleColor;
+     }
+     
+     .mm-notification-error-alert .msg-desc{
+        color: @Model.Configuration.ErrorSetting.AlertMessageColor;
      }
      
      .mm-notification-error-alert .close-btn{
@@ -247,25 +261,25 @@
     
     class Notification {
         information(message, uniqueId,title = "Information!") {
-            return this.prepare(message, title, uniqueId, notificationConfig.info.alertIcon);
+            return this.prepare(message, title, uniqueId, notificationConfig.info.alertIcon, 'mm-notification-info-alert');
         }
     
         warning(message, uniqueId, title = "Warning!") {
-            return this.prepare( message, title, uniqueId, notificationConfig.warning.alertIcon);
+            return this.prepare( message, title, uniqueId, notificationConfig.warning.alertIcon, 'mm-notification-warning-alert');
         }
     
         success(message, uniqueId, title = "Success!") {
-            return this.prepare(message, title, uniqueId, notificationConfig.success.alertIcon);
+            return this.prepare(message, title, uniqueId, notificationConfig.success.alertIcon, 'mm-notification-success-alert');
         }
     
         error(message, uniqueId, title = "Error!") {
-            return this.prepare(message, title, uniqueId, notificationConfig.error.alertIcon);
+            return this.prepare(message, title, uniqueId, notificationConfig.error.alertIcon, 'mm-notification-error-alert');
         }
     
-        prepare(message, title, uniqueId, alertIcon) {
-            return `<div class="mm-notification-alert show showAlert mm-notification-info-alert" id="${uniqueId}">
+        prepare(message, title, uniqueId, alertIcon, notificationType) {
+            return `<div class="mm-notification-alert show showAlert ${notificationType}" id="${uniqueId}">
                          <span class="${alertIcon}"></span>
-                         <div class="msg"><strong>${title}</strong><br/><span class="msg-desc">${message}</span></div>
+                         <div class="msg"><strong class="msg-title">${title}</strong><br/><span class="msg-desc">${message}</span></div>
                          <div class="close-btn"><span class="fas fa-times close-icon"></span></div>
                     </div>`;
         }
@@ -276,17 +290,13 @@
     function work(message, i){
     
         const workTimer = setTimeout(function(){
-          
-            let key = notificationKey+i;
-    
-            $(notificationId).append(notification.warning(message, key));
+         
+            $(notificationId).append(message);
             
             notificationIndex += 1;
     
-            if(notificationIndex === numberOfNotification) { console.log('DD: ', notificationIndex); workDone(); }
-    
-            
-            
+            if(notificationIndex === numberOfNotification) { workDone(); }
+   
             clearTimeout(workTimer);
     
         }, 1000 * i);
@@ -314,16 +324,30 @@
             clearTimeout(timer);
         }, 1300);
     });
+    
+    function prepareNotification(alert, key) {
+      switch (alert.type) {
+        case 1:
+          work(notification.information(alert.message, notificationKey+key, alert.title), key);
+          break;
+        case 2:
+          work(notification.success(alert.message, notificationKey+key, alert.title), key);
+          break;
+        case 3:
+          work(notification.warning(alert.message, notificationKey+key, alert.title), key);
+          break;
+        case 4:
+          work(notification.error(alert.message, notificationKey+key, alert.title), key);
+          break;
+        default:
+          work(notification.information(alert.message, notificationKey+key, alert.title), key);
+      }
+    }
 
     $(document).ready(function() {
-      
-      
-      
-       // notificationIndex = 0;
-        const notifications = @Html.Raw(Model.Notifications.ToJson())
-        console.log('Check: ', notificationIndex );
-        for (let i = 1; i <= numberOfNotification; i++) {
-          work('test message', i);
+        const notifications = @Html.Raw(Model.Notifications!.ToJson())
+        for (let i = 0; i < numberOfNotification; i++) {
+          prepareNotification(notifications[i], i+1);
         }
     });
 
