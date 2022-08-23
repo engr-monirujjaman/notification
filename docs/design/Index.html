@@ -1,140 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <title>Notification</title>
-</head>
-<body>
+  </head>
+  <body>
     <button>Show Alert</button>
-    <div class="notification" id="notification-id"></div>
+    <div class="notification" id="mm-notification"></div>
 
-
-    <!-- <div class="mm-notification-alert hide" style="border-left: 10px solid #ffa502; background: #ffdb9b;">
-       <span class="fas fa-exclamation-circle"></span>
-       <div class="msg" style="color: #ce8500;"><strong>Warning!</strong> 
-        <br/>
-        <span class="msg-desc">This is a warning alert!</span></div>
-       <div class="close-btn" style="background: #ffd080;" onmouseover="this.style.color='#ffc766'" onmouseout="this.style.color='#ce8500'">
-          <span class="fas fa-times" style="color: #ce8500;"></span>
-       </div>
+    <!-- <div class="mm-notification-alert hide mm-notification-info-alert">
+      <span class="fas fa-exclamation-circle"></span>
+      <div class="msg">
+        <strong>Warning!</strong>
+        <br />
+        <span class="msg-desc">This is a warning alert!</span>
+      </div>
+      <div class="close-btn">
+        <span class="fas fa-times close-icon"></span>
+      </div>
     </div> -->
-    <script>
 
-       let data = `<div class="mm-notification-alert show showAlert">
-       <span class="fas fa-exclamation-circle"></span>
-       <div class="msg"><strong>Warning! kjd fdasfkd sfdskjfds fsdkfjds fsdfjds jfdfh dfhsdf fsdfk fggk fdkg gkfg gfdksgh ghfd gskdg fdgfd gfdhg kjdfj kgjf fkgjg kgjfjfg kfjj kfjg fjdskf fdsfj dfjk
-          dfkjd dafdskf fjsdfksd fdkjf fsgjfg fgkjfsdg fsgkjfg fsdgkjfds gfdlkgjfd gdflkjg gfdjgs gsfdjg glfsdjg monir</strong> 
-        <br/>
-        <span class="msg-desc">This is a warning alert! jfdfh dfhsdf fsdfk fggk fdkg gkfg gfdksgh ghfd gskdg fdgfd gfdhg kjdfj kgjf fkgjg kgjfjfg kfjj kfjg fjdskf fdsfj dfjk
-          dfkjd dafdskf fjsdfksd fdkjf fsgjfg fgkjfsdg fsgkjfg fsdgkjfds gfdlkgjfd gdflkjg gfdjgs gsfdjg glfsdjg monir</span></div>
-       <div class="close-btn">
-          <span class="fas fa-times" style="color: #ce8500"></span>
-       </div>
+    <script>
+      let data = `<div class="mm-notification-alert show showAlert mm-notification-info-alert">
+      <span class="fas fa-exclamation-circle"></span>
+      <div class="msg">
+        <strong>Warning!</strong>
+        <br />
+        <span class="msg-desc">This is a warning alert!</span>
+      </div>
+      <div class="close-btn">
+        <span class="fas fa-times close-icon"></span>
+      </div>
     </div>`;
 
-        //  $('.mm-notification-alert').addClass("show");
-        //  $('.mm-notification-alert').removeClass("hide");
-        //  $('.mm-notification-alert').addClass("showAlert");
+      const notificationId = $('#mm-notification');
+      const notificationKey = 'mm-notification-key-';
+      const numberOfNotification = 6;
+      let notificationIndex = 1;
 
-        const notificationConfig = {
-         info:{
-               icon: 'fas fa-info-circle',
-               alertBackgroundColor: '#ffdb9b',
-               alertMessageColor: "#ce8500",
-		         alertIconColor: "#ce8500",
-		         alertLeftBorderColor: "#ffa502",
-               closeBackgroundColor: "#ffd080",
-               closeButtonIconColor: "#ce8500",
-               closeButtonHoverColor: "#ffc766"
-            },
-            warning:{
-               icon: 'fas fa-exclamation-circle',
-               alertBackgroundColor: '#ffdb9b',
-               alertMessageColor: "#ce8500",
-		         alertIconColor: "#ce8500",
-		         alertLeftBorderColor: "#ffa502",
-               closeBackgroundColor: "#ffd080",
-               closeButtonIconColor: "#ce8500",
-               closeButtonHoverColor: "#ffc766"
-            },
-            success:{
-               icon: 'fas fa-check-circle',
-               alertBackgroundColor: '#ffdb9b',
-               alertMessageColor: "#ce8500",
-		         alertIconColor: "#ce8500",
-		         alertLeftBorderColor: "#ffa502",
-               closeBackgroundColor: "#ffd080",
-               closeButtonIconColor: "#ce8500",
-               closeButtonHoverColor: "#ffc766"
-            },
-            error:{
-               icon: 'fas fa-exclamation',
-               alertBackgroundColor: '#ffdb9b',
-               alertMessageColor: "#ce8500",
-		         alertIconColor: "#ce8500",
-		         alertLeftBorderColor: "#ffa502",
-               closeBackgroundColor: "#ffd080",
-               closeButtonIconColor: "#ce8500",
-               closeButtonHoverColor: "#ffc766"
-            },
-            delayTime: 5000
+      class Notification {
+        information(message, unitqueId, title = "Information!") {
+          return this.prepare(message, title, unitqueId);
         }
 
-
-        class Notification {
-
-            information(message, title = 'Information!') { return this.prepare(notificationConfig.warning, message, title);}
-      
-            warning(message, title = 'Warning!') {return this.prepare(notificationConfig.warning, message, title);}
-
-            success(message, title = 'Success!') {return this.prepare(notificationConfig.success, message, title);}
-
-          error(message, title = 'Error!') {return this.prepare(notificationConfig.error, message, title);} 
-
-          prepare(config, message, title) { return `<div class="mm-notification-alert show showAlert" style="border-left: 10px solid ${config.alertLeftBorderColor}; background: ${config.alertBackgroundColor};">
-                                                      <span class="${config.icon}"></span>
-                                                      <div class="msg" style="color: ${config.alertMessageColor};"><strong>${title}</strong><br/><span class="msg-desc">${message}</span></div>
-                                                      <div class="close-btn" style="background: ${config.closeBackgroundColor};" onmouseover="this.style.color='${config.closeButtonHoverColor}; !important'" onmouseout="this.style.color='${config.closeBackgroundColor}'">
-                                                            <span class="fas fa-times" style="color: ${config.closeButtonIconColor}"></span>
-                                                      </div>
-                                                   </div>`;}
+        warning(message, unitqueId, title = "Warning!") {
+          return this.prepare( message, title, unitqueId);
         }
 
-        $('button').click(function(){
+        success(message, unitqueId, title = "Success!") {
+          return this.prepare(message, title, unitqueId);
+        }
 
-         let d = new Notification();
+        error(message, unitqueId, title = "Error!") {
+          return this.prepare(message, title, unitqueId);
+        }
 
+        prepare(message, title, unitqueId) {
+          return `<div class="mm-notification-alert show showAlert mm-notification-info-alert" id="${unitqueId}">
+                        <span class="fas fa-exclamation-circle"></span>
+                        <div class="msg"><strong>${title}</strong><br/><span class="msg-desc">${message}</span></div>
+                        <div class="close-btn"><span class="fas fa-times close-icon"></span></div>
+                  </div>`;
+        }
+      }
 
-         console.log(d.warning('This is warning message!'));
-
-
-         $('#notification-id').append(d.warning('This is warning message kfjdkfjd dfkjsdkf flkjsdaf dflkjdasf dslfkj!'));
-
-         const timer = setTimeout(function(){
-           $('.mm-notification-alert').removeClass("show");
-           $('.mm-notification-alert').addClass("hide");
-           clearTimeout(timer);
-         },5000);
-
-
-         // $('#notification-id').prepend(data).children(':first').delay(5000).addClass('hide').removeClass('show');
-
-         // $('#notification-id').prepend(data).children(':first').delay(10000).removeClass('show').addClass('hide');
-
-        });
-
-       $('.close-btn').click(function(){
-         $('.mm-notification-alert').removeClass("show");
-         $('.mm-notification-alert').addClass("hide");
-       });
+      let notification = new Notification();
 
 
+      $("button").click(function () {
+        
+        $(notificationId).empty();
+
+        notificationIndex = 1;
+
+        for(let i = 1; i < numberOfNotification; i++) {
+
+            work('This is a waring message-'+i, i);
+        }
+
+      });
+
+
+      function work(message, i){
+
+           const workTimer = setTimeout(function(){
+
+               let key = notificationKey+i;
+
+               let keySelector = $('#'+key);
+
+               $(notificationId).append(notification.warning(message, key));
+   
+               $(keySelector).find('.close-btn').click(function(){
+                  $(keySelector).removeClass("show");
+                  $(keySelector).addClass("hide");
+               })
+
+               notificationIndex += 1;
+
+               if(notificationIndex === numberOfNotification) {
+                  workDone();
+               }
+
+               clearTimeout(workTimer);
+
+            }, 1000 * i);
+      }
+
+
+      function workDone(){
+
+         let messages = $(notificationId).children();
+
+         $.each(messages, function(index, value){
+            RemoveElement(index+1);
+         });
+
+      }
+
+      $(notificationId).on('click', '.close-btn', function(e){
+         e.preventDefault();
+         if(!$(e.currentTarget).parent().hasClass('mm-notification-alert')) return;
+         $(e.currentTarget).parents('.mm-notification-alert').removeClass('show').addClass('hide');
+         const timer = setTimeout(() => {
+            $(e.currentTarget).parents('.mm-notification-alert').remove();
+            clearTimeout(timer);
+         }, 1300);
+      });
+
+      function RemoveElement(index) {
+         const timer = setTimeout(() => {
+            $(`#${notificationKey}${index}`).removeClass('show').addClass('hide');
+            clearTimeout(timer);
+         }, 1300 * index);
+      }
 
     </script>
-</body>
+  </body>
 </html>

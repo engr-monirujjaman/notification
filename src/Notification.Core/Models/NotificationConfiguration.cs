@@ -1,25 +1,19 @@
-using System.Text.Json.Serialization;
 using Notification.Core.Enums;
 
 namespace Notification.Core.Models;
 
 public class NotificationConfiguration
 {
-    [JsonPropertyName("delayTime")]
     public int DurationInSeconds { get; set; } = 5;
 
     public NotificationPosition Position { get; set; } = NotificationPosition.TopRight;
-
-    [JsonPropertyName("info")]
+    
     private NotificationSetting InfoSetting { get; set; } = new();
     
-    [JsonPropertyName("warning")]
     private NotificationSetting WarningSetting { get; set; } = new();
     
-    [JsonPropertyName("success")]
     private NotificationSetting SuccessSetting { get; set; } = new();
     
-    [JsonPropertyName("error")]
     private NotificationSetting ErrorSetting { get; set; } = new();
 
     public NotificationConfiguration AddInformation(NotificationSetting setting)
@@ -31,6 +25,7 @@ public class NotificationConfiguration
         InfoSetting.AlertLeftBorderColor ??= "#ffa502";
         InfoSetting.CloseButtonBackgroundColor ??= "#ffd080";
         InfoSetting.CloseButtonIconColor ??= "#ce8500";
+        InfoSetting.CloseButtonHoverColor ??= "#ffc766";
         InfoSetting.Icon ??= "fas fa-info-circle";
         return this;
     }
@@ -44,6 +39,7 @@ public class NotificationConfiguration
         WarningSetting.AlertLeftBorderColor ??= "#ffa502";
         WarningSetting.CloseButtonBackgroundColor ??= "#ffd080";
         WarningSetting.CloseButtonIconColor ??= "#ce8500";
+        WarningSetting.CloseButtonHoverColor ??= "#ffc766";
         WarningSetting.Icon ??= "fas fa-exclamation-circle";
         return this;
     }
@@ -57,6 +53,7 @@ public class NotificationConfiguration
         SuccessSetting.AlertLeftBorderColor ??= "#ffa502";
         SuccessSetting.CloseButtonBackgroundColor ??= "#ffd080";
         SuccessSetting.CloseButtonIconColor ??= "#ce8500";
+        SuccessSetting.CloseButtonHoverColor ??= "#ffc766";
         SuccessSetting.Icon ??= "fas fa-check-circle";
         return this;
     }
@@ -71,7 +68,26 @@ public class NotificationConfiguration
         ErrorSetting.AlertLeftBorderColor ??= "#ffa502";
         ErrorSetting.CloseButtonBackgroundColor ??= "#ffd080";
         ErrorSetting.CloseButtonIconColor ??= "#ce8500";
+        WarningSetting.CloseButtonHoverColor ??= "#ffc766";
         ErrorSetting.Icon ??= "fas fa-exclamation";
         return this;
+    }
+
+    internal NotificationConfig Build()
+    {
+        AddInformation(new NotificationSetting());
+        AddWarning(new NotificationSetting());
+        AddSuccess(new NotificationSetting());
+        AddError(new NotificationSetting());
+        
+        return new NotificationConfig
+        {
+            DurationInSeconds = DurationInSeconds,
+            Position = Position,
+            WarningSetting = WarningSetting,
+            InfoSetting = InfoSetting,
+            SuccessSetting = SuccessSetting,
+            ErrorSetting = ErrorSetting
+        };
     }
 }

@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddNotification(config =>
 {
-    config.DurationInSeconds = 4;
+    config.DurationInSeconds = 5;
     config.Position = NotificationPosition.TopRight;
 });
 

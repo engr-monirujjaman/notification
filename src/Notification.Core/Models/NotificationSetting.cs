@@ -13,6 +13,10 @@ public class NotificationSetting
     public string? CloseButtonBackgroundColor { get; set; }
 
     public string? CloseButtonIconColor { get; set; }
+    
+    public string? CloseButtonHoverColor { get; set; }
 
     public string? Icon { get; set; }
+
+    public string IconClass() => Icon!.Trim().Split(" ").Last();
 }

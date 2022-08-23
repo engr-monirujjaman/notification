@@ -9,7 +9,7 @@
 
     --mm-notification-close-background-color: #ffd080;
     --mm-notification-close-button-icon-color: #ce8500;
-    --mm-notification-close-button-hover-color: #ce8500;
+    --mm-notification-close-button-hover-color: #ffc766;
 }
 
 *{
@@ -19,14 +19,17 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
 html,body{
   height: 100%;
 }
+
 body{
   display: grid;
   place-items: center;
   overflow: hidden;
 }
+
 button{
   padding: 8px 16px;
   font-size: 25px;
@@ -72,13 +75,16 @@ button{
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
 .mm-notification-alert.showAlert{
   opacity: 1;
   pointer-events: auto;
 }
+
 .mm-notification-alert.show{
   animation: mm_notification_show_slide 1s ease forwards;
 }
+
 @keyframes mm_notification_show_slide {
   0%{
     transform: translateX(100%);
@@ -93,9 +99,11 @@ button{
     transform: translateX(-20px);
   }
 }
+
 .mm-notification-alert.hide{
   animation: mm_notification_hide_slide 1s ease forwards;
 }
+
 @keyframes mm_notification_hide_slide {
   0%{
     transform: translateX(-10px);
@@ -110,18 +118,12 @@ button{
     transform: translateX(100%);
   }
 }
-.mm-notification-alert .fa-exclamation-circle{
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--mm-notification-alert-icon-color);
-  font-size: 30px;
-}
+
 .mm-notification-alert .msg{
   padding: 0 20px;
   font-size: 18px;
 }
+
 .mm-notification-alert .msg span{
   font-size: 16px;
   text-overflow: ellipsis;
@@ -131,6 +133,7 @@ button{
   line-clamp: 3; 
   -webkit-box-orient: vertical;
 }
+
 .mm-notification-alert .close-btn{
   position: absolute;
   right: 0px;
@@ -138,13 +141,18 @@ button{
   transform: translateY(-50%);
   padding: 100% 18px;
   cursor: pointer;
-  background: #ffd080;
-  
 }
-.mm-notification-alert .close-btn:hover{
-  background: #ffc766;
+
+.mm-notification-alert .fa-exclamation-circle{
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mm-notification-alert-icon-color);
+  font-size: 30px;
 }
-.mm-notification-alert .close-btn .fas{
+
+.mm-notification-alert .close-btn .close-icon{
   font-size: 22px;
   line-height: 40px;
 }
@@ -156,6 +164,10 @@ button{
 
 .mm-notification-info-alert .msg{
   color: var(--mm-notification-alert-message-color);
+}
+
+.mm-notification-info-alert .close-btn{
+  background: var(--mm-notification-close-background-color)
 }
 
 .mm-notification-info-alert .close-btn:hover{

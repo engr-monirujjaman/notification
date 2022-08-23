@@ -23,6 +23,6 @@ public static class ServiceCollectionExtensions
 
         config?.Invoke(notificationConfig);
 
-        services.AddSingleton(notificationConfig);
+        services.AddSingleton(notificationConfig.Build());
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using Notification.Core.Extensions;
 using Notification.Core.Services.Contracts;
 
 namespace Notification.Core.ViewComponents;
@@ -7,16 +9,16 @@ namespace Notification.Core.ViewComponents;
 public class NotificationViewComponent : ViewComponent
 {
     private readonly INotificationService _notificationService;
-    private readonly NotificationConfiguration _configuration;
+    private readonly NotificationConfig _configuration;
 
-    public NotificationViewComponent(INotificationService notificationService, NotificationConfiguration configuration)
+    public NotificationViewComponent(INotificationService notificationService, NotificationConfig configuration)
     {
         _notificationService = notificationService;
         _configuration = configuration;
         _configuration.DurationInSeconds *= 1000;
     }
     
-    public IViewComponentResult Invoke(Action<NotificationConfiguration>? configuration)
+    public IViewComponentResult Invoke()
     {
         return View("Default", new NotificationViewModel
         {
