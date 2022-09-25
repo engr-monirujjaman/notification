@@ -1,0 +1,57 @@
+﻿@using Notification.Extensions
+@model Notification.Models.NotificationViewModel
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+    const showAllNotification = (data) => {
+        toastr.options = data.options;
+        let notifications = data.notifications;
+        for (let i = 0; i < notifications.length; i++){
+            const timer = setTimeout(() => {
+                let v = notifications[i];
+                switch (v.type) {
+                  case 'info': toastr.info(v.message, v.title); break;
+                  case 'warning': toastr.warning(v.message, v.title); break;
+                  case 'success': toastr.success(v.message, v.title); break;
+                  case 'error': toastr.error(v.message, v.title); break;
+                  default: toastr.info(v.message, v.title); break;
+                }
+                clearTimeout(timer);
+            }, 1000 * i);
+        }
+    }
+    
+    $(document).ready(function() {
+        const data = @Html.Raw(Model.ToJson())
+        showAllNotification(data);
+    });    
+    
+    $.ajaxPrefilter(
+        function (options, originalOptions, jqXHR) {
+            jqXHR.done(
+                function (results, responseText, jqXHR) {
+                    getResponseHeaders(jqXHR);
+                }
+            )
+        }
+    )
+
+    function getResponseHeaders(jqXHR) {
+        jqXHR.responseHeaders = {};
+        let notificationHeader = jqXHR.getResponseHeader("X-Notification");
+        if (notificationHeader !== null) {
+            notificationHeader = notificationHeader.split("\n");
+            notificationHeader.forEach(function (header) {
+                header = header.split(": ");
+                let key = header.shift();
+                if (key.length === 0) return;
+                key = key.replace(/\+/g, '%20');
+                let decodedData = decodeURIComponent(key);
+                let data = JSON.parse(decodedData);  
+                showAllNotification(data);
+            });
+        }
+    }
+</script>
