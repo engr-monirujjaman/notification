@@ -5,6 +5,17 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
         <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>Monirujjaman.AspNetCore.Mvc.Toaster.Notification</PackageId>
+        <Title>Monirujjaman.AspNetCore.Mvc.Toaster.Notification</Title>
+        <Authors>Md. Monirujjaman</Authors>
+        <Description>This is an asp net core mvc with jquery toaster notication library</Description>
+        <Copyright>Md. Monirujjaman</Copyright>
+        <PackageLicenseUrl>https://github.com/engr-monirujjaman/notification/blob/ee17b499846c807ac1ef28c6036833797e39dfa1/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/engr-monirujjaman/notification</RepositoryUrl>
+        <RepositoryType>Open source</RepositoryType>
+        <PackageTags>toaster, notification, mvc notificaiton, asp net core taster notification</PackageTags>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
     <ItemGroup>
