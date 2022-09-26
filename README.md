@@ -1,5 +1,9 @@
 # Notification
 This package is an asp net core mvc toaster notificaton helping tool.
+
+## Dependency
+> .NET 6 & .NET 7
+
 ## Why you are use this package?
 - Provide dependency Injection
 - Ajax request support
